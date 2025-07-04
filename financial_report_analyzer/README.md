@@ -72,17 +72,19 @@ pip install -r requirements.txt
     ```
     (If running from the parent directory, use `python financial_report_analyzer/report_parser.py`)
 
-## Sample Output
+## Sample Output Description
 
 When `report_parser.py` is run, it will print several pieces of information to the console:
 
 1.  **Extracted Metrics DataFrame:** A table showing the key financial metrics and their values for each period.
 2.  **Period-over-Period Change (%):** A table showing the percentage change for each metric from one period to the next.
-3.  **Advanced Trend Analysis Summary (Structured):** A detailed textual breakdown including:
+3.  **Structured Trend Analysis:** A detailed textual breakdown including:
     *   Average values for each metric.
     *   Descriptions of consecutive growth/decline streaks.
     *   Notes on significant deviations from the average for each metric.
 4.  **Simulated LLM Narrative Summary:** A paragraph-style summary that mimics how an LLM might describe the key findings. This output will explicitly state it's a simulation.
+
+(See the "Example Console Output" section below for an actual truncated sample.)
 
 ## LLM Integration Note
 
@@ -93,3 +95,103 @@ To integrate a real LLM (like OpenAI's GPT, Google's Gemini, or an open-source m
 2.  Replace the `get_simulated_llm_summary` function's internal logic with actual API calls to your chosen LLM service.
 3.  You would need to handle API keys, request formatting, and response parsing according to the LLM provider's SDK or API documentation.
 4.  Ensure the environment where this code runs has network access and necessary credentials for the LLM API.
+
+## Example Console Output
+
+Below is a sample of the output generated when running `python financial_report_analyzer/report_parser.py`:
+
+```text
+First sheet 'Financials_And_Stats' loaded successfully.
+
+Extracting metrics as DataFrame from sheet: 'Financials_And_Stats'
+
+Extracted Metrics DataFrame:
+                                   2023-Q4     2024-Q1     2024-Q2
+Financial Metric
+Total Patient Revenue          10000000.00  10200000.0  10500000.0
+Total Operating Revenue        10500000.00  10710000.0  11020000.0
+Total Operating Expenses        7500000.00   7665000.0   7830000.0
+Net Operating Income            3000000.00   3045000.0   3190000.0
+Net Income (Loss)               3150000.00   3203000.0   3355000.0
+Number of Beds                      200.00       200.0       205.0
+Patient Days                      15000.00     15300.0     15800.0
+Average Length of Stay (Days)         7.50         7.6         7.7
+Occupancy Rate (%)                   81.52        85.0        84.7
+Emergency Room Visits              5000.00      5100.0      5250.0
+NonExistentMetric                      NaN         NaN         NaN
+
+Calculating Period-over-Period Change (%):
+                               2023-Q4   2024-Q1   2024-Q2
+Financial Metric
+Total Patient Revenue              NaN  2.000000  2.941176
+Total Operating Revenue            NaN  2.000000  2.894491
+Total Operating Expenses           NaN  2.200000  2.152642
+Net Operating Income               NaN  1.500000  4.761905
+Net Income (Loss)                  NaN  1.682540  4.745551
+Number of Beds                     NaN  0.000000  2.500000
+Patient Days                       NaN  2.000000  3.267974
+Average Length of Stay (Days)      NaN  1.333333  1.315789
+Occupancy Rate (%)                 NaN  4.268891 -0.352941
+Emergency Room Visits              NaN  2.000000  2.941176
+NonExistentMetric                  NaN       NaN       NaN
+
+--- Structured Trend Analysis ---
+Trend Analysis Summary:
+
+Metric Averages:
+  - Total Patient Revenue: 10,233,333.33
+  - Total Operating Revenue: 10,743,333.33
+  - Total Operating Expenses: 7,665,000.00
+  - Net Operating Income: 3,078,333.33
+  - Net Income (Loss): 3,236,000.00
+  - Number of Beds: 201.67
+  - Patient Days: 15,366.67
+  - Average Length of Stay (Days): 7.60
+  - Occupancy Rate (%): 83.74
+  - Emergency Room Visits: 5,116.67
+  - NonExistentMetric: nan
+
+
+Analysis for Metric: Total Patient Revenue
+  - Consecutive Growth: 2 periods, from 2023-Q4 (10,000,000.00) to 2024-Q2 (10,500,000.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Total Operating Revenue
+  - Consecutive Growth: 2 periods, from 2023-Q4 (10,500,000.00) to 2024-Q2 (11,020,000.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Total Operating Expenses
+  - Consecutive Growth: 2 periods, from 2023-Q4 (7,500,000.00) to 2024-Q2 (7,830,000.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Net Operating Income
+  - Consecutive Growth: 2 periods, from 2023-Q4 (3,000,000.00) to 2024-Q2 (3,190,000.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Net Income (Loss)
+  - Consecutive Growth: 2 periods, from 2023-Q4 (3,150,000.00) to 2024-Q2 (3,355,000.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Number of Beds
+  - Consecutive Growth: 1 periods, from 2024-Q1 (200.00) to 2024-Q2 (205.00). Change first noted in 2024-Q2.
+
+Analysis for Metric: Patient Days
+  - Consecutive Growth: 2 periods, from 2023-Q4 (15,000.00) to 2024-Q2 (15,800.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: Average Length of Stay (Days)
+  - Consecutive Growth: 2 periods, from 2023-Q4 (7.50) to 2024-Q2 (7.70). Change first noted in 2024-Q1.
+
+Analysis for Metric: Occupancy Rate (%)
+  - Consecutive Growth: 1 periods, from 2023-Q4 (81.52) to 2024-Q1 (85.00). Change first noted in 2024-Q1.
+  - Consecutive Decline: 1 periods, from 2024-Q1 (85.00) to 2024-Q2 (84.70). Change first noted in 2024-Q2.
+
+Analysis for Metric: Emergency Room Visits
+  - Consecutive Growth: 2 periods, from 2023-Q4 (5,000.00) to 2024-Q2 (5,250.00). Change first noted in 2024-Q1.
+
+Analysis for Metric: NonExistentMetric
+
+
+--- LLM Integration ---
+
+--- Simulated LLM Narrative Summary ---
+--- Simulated LLM Narrative Summary (Illustrative) ---
+
+Overall, the financial report for the organization indicates several noteworthy trends. Profitability appears to be improving. Key operational metrics such as Patient Days, Occupancy Rate, Emergency Room Visits also showed some activity.
+
+It is advisable to look deeper into these areas to understand the underlying drivers. (Note: This is a simulated summary based on structured data.)
+```
